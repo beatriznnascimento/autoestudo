@@ -1,26 +1,19 @@
-import axios from 'axios'
-import type { UsuarioDTO } from '@/types/UsuarioDTO'
+import api from './api'
+import type { User } from '@/types/UsuarioDTO'
 
-const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
-})
-
-export const listarUsuarios = async (): Promise<UsuarioDTO[]> => {
+export const getAllUsers = async (): Promise<User[]> => {
   const res = await api.get('/usuarios')
   return res.data
 }
-/*
-export const criarUsuario = async (usuario: UsuarioDTO): Promise<UsuarioDTO> => {
-  const res = await api.post('/usuarios', usuario)
-  return res.data
+
+export const createUser = async (user: User) => {
+  return await api.post('/usuarios', user)
 }
 
-export const atualizarUsuario = async (id: number, usuario: UsuarioDTO): Promise<UsuarioDTO> => {
-  const res = await api.put(`/usuarios/${id}`, usuario)
-  return res.data
+export const updateUser = async (id: number, user: User) => {
+  return await api.put(`/usuarios/${id}`, user)
 }
 
-export const excluirUsuario = async (id: number): Promise<void> => {
-  await api.delete(`/usuarios/${id}`)
+export const deleteUserById = async (id: number) => {
+  return await api.delete(`/usuarios/${id}`)
 }
-*/

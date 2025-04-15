@@ -22,18 +22,39 @@ public class CursoController {
     @GetMapping
     public List<CursoDTO> listar() {
         return service.listar().stream()
-                .map(c -> new CursoDTO(c.getId(), c.getNome(), c.getTurno()))
+                .map(c -> new CursoDTO(c.getId(), c.getNome(), c.getSigla(), c.getTurno()))
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public CursoDTO buscarPorId(@PathVariable Long id) {
+        Curso curso = service.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
+
+        return new CursoDTO(curso.getId(), curso.getNome(), curso.getSigla(), curso.getTurno());
+    }
+
     @PostMapping
-    public Curso criar(@RequestBody @Valid Curso curso) {
-        return service.salvar(curso);
+    public CursoDTO criar(@RequestBody @Valid CursoDTO dto) {
+        Curso curso = new Curso();
+        curso.setNome(dto.nome());
+        curso.setSigla(dto.sigla());
+        curso.setTurno(dto.turno());
+
+        Curso salvo = service.salvar(curso);
+        return new CursoDTO(salvo.getId(), salvo.getNome(), salvo.getSigla(), salvo.getTurno());
     }
 
     @PutMapping("/{id}")
-    public Curso atualizar(@PathVariable Long id, @RequestBody @Valid Curso curso) {
-        return service.atualizar(id, curso);
+    public CursoDTO atualizar(@PathVariable Long id, @RequestBody @Valid CursoDTO dto) {
+        Curso curso = new Curso();
+        curso.setId(id);
+        curso.setNome(dto.nome());
+        curso.setSigla(dto.sigla());
+        curso.setTurno(dto.turno());
+
+        Curso atualizado = service.atualizar(id, curso);
+        return new CursoDTO(atualizado.getId(), atualizado.getNome(), atualizado.getSigla(), atualizado.getTurno());
     }
 
     @DeleteMapping("/{id}")

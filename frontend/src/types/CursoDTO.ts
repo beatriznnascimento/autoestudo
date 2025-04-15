@@ -1,8 +1,7 @@
-// src/types/Curso.ts
-export interface CursoDTO {
+export interface Curso {
     id: number
     nome: string
     sigla: string
-    turno: string
+    turno: 'MANHA' | 'TARDE' 
   }
   

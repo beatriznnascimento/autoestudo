@@ -38,6 +38,22 @@ public class UsuarioController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public UsuarioDTO buscarPorId(@PathVariable Long id) {
+    Usuario usuario = usuarioService.buscarPorId(id)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    return new UsuarioDTO(
+        usuario.getId(),
+        usuario.getNome(),
+        usuario.getEmail(),
+        usuario.isAtivo(),
+        usuario.getCurso() != null ? usuario.getCurso().getId() : null,
+        usuario.getCurso() != null ? usuario.getCurso().getNome() : null
+    );
+}
+
+
     @PostMapping
     public UsuarioDTO criar(@RequestBody @Valid UsuarioInputDTO dto) {
         Curso curso = cursoService.buscarPorId(dto.cursoId())

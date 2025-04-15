@@ -1,49 +1,76 @@
 <template>
   <v-container>
-    <v-card class="pa-4">
-      <v-card-title class="text-h5">Usuários Cadastrados</v-card-title>
+    <v-card class="pa-4" color="black" dark>
+      <v-toolbar color="primary" flat>
+        <v-toolbar-title>Lista de Alunos</v-toolbar-title>
+      </v-toolbar>
 
-      <v-data-table
-        :headers="headers"
-        :items="usuarios"
-        :loading="carregando"
-        loading-text="Carregando usuários..."
-        class="mt-4"
+      <v-btn class="my-4" color="grey" @click="openForm()">+ Novo Aluno</v-btn>
+
+      <v-card
+        v-for="user in users"
+        :key="user.id"
+        class="mb-4 pa-4"
+        color="grey darken-3"
       >
-        <template #item.ativo="{ item }">
-          <v-chip :color="item.ativo ? 'green' : 'red'" dark>
-            {{ item.ativo ? 'Ativo' : 'Inativo' }}
-          </v-chip>
-        </template>
+        <div class="text-h6">{{ user.nome }}</div>
+        <div>Status: {{ user.ativo ? 'ATIVO' : 'INATIVO' }}</div>
+        <div>Email: {{ user.email }}</div>
+        <div>Curso: {{ user.cursoDTO ?? 'Nenhum' }}</div>
 
-        <template #item.curso="{ item }">
-          {{ item.curso || '—' }}
-        </template>
-      </v-data-table>
+
+
+        <v-btn color="grey" class="mt-2 mr-2" @click="openForm(user)">Editar</v-btn>
+        <v-btn
+          color="red"
+          class="mt-2"
+          v-if="!user.ativo"
+          @click="deleteUser(user.id!)"
+        >
+          Excluir
+        </v-btn>
+      </v-card>
     </v-card>
+
+    <UsuarioForm
+      :editedUser="selectedUser"
+      v-if="showForm"
+      @close="closeForm"
+      @saved="loadUsers"
+    />
+
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { listarUsuarios } from '@/service/usuarioService'
-import type { UsuarioDTO } from '@/types/UsuarioDTO'
+import { ref, onMounted } from 'vue'
+import { getAllUsers, deleteUserById } from '@/service/usuarioService'
+import UsuarioForm from '../components/UsuarioForm.vue'
+import type { User } from '@/types/UsuarioDTO'
 
-const usuarios = ref<UsuarioDTO[]>([])
-const carregando = ref(true)
+const users = ref<User[]>([])
+const showForm = ref(false)
+const selectedUser = ref<User | null>(null)
 
-const headers = [
-  { text: 'Nome', value: 'nome' },
-  { text: 'Email', value: 'email' },
-  { text: 'Status', value: 'ativo' },
-  { text: 'Curso', value: 'curso' }
-]
+const loadUsers = async () => {
+  users.value = await getAllUsers()
+}
 
-onMounted(async () => {
-  try {
-    usuarios.value = await listarUsuarios()
-  } finally {
-    carregando.value = false
-  }
-})
+const openForm = (user: User | null = null) => {
+  selectedUser.value = user
+  showForm.value = true
+}
+
+const closeForm = () => {
+  selectedUser.value = null
+  showForm.value = false
+  loadUsers()
+}
+
+const deleteUser = async (id: number) => {
+  await deleteUserById(id)
+  loadUsers()
+}
+
+onMounted(loadUsers)
 </script>

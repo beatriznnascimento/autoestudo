@@ -2,12 +2,11 @@ package com.npi.autoestudo.service;
 
 import com.npi.autoestudo.model.Usuario;
 import com.npi.autoestudo.repository.UsuarioRepository;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -20,6 +19,9 @@ public class UsuarioService {
     public List<Usuario> listarTodos() {
         return repository.findAll();
     }
+    public Optional<Usuario> buscarPorId(Long id) {
+        return repository.findById(id);
+    }    
 
     public Usuario salvar(Usuario usuario) {
         return repository.save(usuario);
