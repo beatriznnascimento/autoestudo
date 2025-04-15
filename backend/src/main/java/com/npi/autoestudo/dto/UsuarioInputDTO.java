@@ -13,8 +13,8 @@ public record UsuarioInputDTO(
     @Email(message = "Formato de e-mail inválido")
     String email,
 
-    @NotBlank(message = "A senha é obrigatória")
-    String senha,
+    //@NotBlank(message = "A senha é obrigatória")
+    //String senha,
 
     @NotNull(message = "Informe se o usuário está ativo ou não")
     Boolean ativo,

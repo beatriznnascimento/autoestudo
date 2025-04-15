@@ -23,8 +23,7 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
-    @NotBlank
-    private String senha;
+   //private String senha;
 
     @ManyToOne
     @JoinColumn(name = "curso_id")

@@ -62,7 +62,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
-        usuario.setSenha(dto.senha());
+     //   usuario.setSenha(dto.senha());
         usuario.setAtivo(dto.ativo());
         usuario.setCurso(curso);
 
@@ -87,7 +87,7 @@ public class UsuarioController {
         usuario.setId(id);
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
-        usuario.setSenha(dto.senha());
+       // usuario.setSenha(dto.senha());
         usuario.setAtivo(dto.ativo());
         usuario.setCurso(curso);
 

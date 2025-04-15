@@ -6,13 +6,14 @@ export const getAllUsers = async (): Promise<User[]> => {
   return res.data
 }
 
-export const createUser = async (user: User) => {
-  return await api.post('/usuarios', user)
+export const createUser = async (data: any) => {
+  return await api.post('/usuarios', data)
 }
 
-export const updateUser = async (id: number, user: User) => {
-  return await api.put(`/usuarios/${id}`, user)
+export const updateUser = async (id: number, data: any) => {
+  return await api.put(`/usuarios/${id}`, data)
 }
+
 
 export const deleteUserById = async (id: number) => {
   return await api.delete(`/usuarios/${id}`)
