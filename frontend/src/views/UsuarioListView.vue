@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-card class="pa-4" color="black" dark>
-      <v-toolbar color="primary" flat>
+    <v-card class="pa-4" color="#CCDDED" dark>
+      <v-toolbar color="#3E6485" flat>
         <v-toolbar-title>Lista de Alunos</v-toolbar-title>
       </v-toolbar>
 
-      <v-btn class="my-4" color="grey" @click="openForm()">+ Novo Aluno</v-btn>
+      <v-btn class="my-4" color="#939929" @click="openForm()">+ Novo Aluno</v-btn>
 
       <v-card
         v-for="user in users"
         :key="user.id"
         class="mb-4 pa-4"
-        color="grey darken-3"
+        color="#3E6485"
       >
         <div class="text-h6">{{ user.nome }}</div>
         <div>Status: {{ user.ativo ? 'ATIVO' : 'INATIVO' }}</div>
@@ -20,9 +20,9 @@
 
 
 
-        <v-btn color="grey" class="mt-2 mr-2" @click="openForm(user)">Editar</v-btn>
+        <v-btn color="#939929" class="mt-2 mr-2" @click="openForm(user)">Editar</v-btn>
         <v-btn
-          color="red"
+          color="#A92D29"
           class="mt-2"
           v-if="!user.ativo"
           @click="deleteUser(user.id!)"

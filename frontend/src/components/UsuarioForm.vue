@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600">
     <v-card>
-      <v-toolbar color="primary" dark>
+      <v-toolbar color="#3E6485" dark>
         <v-toolbar-title>
           {{ form.id ? 'Editar Aluno' : 'Novo Aluno' }}
         </v-toolbar-title>
@@ -27,7 +27,7 @@
             v-model="form.ativo"
             mandatory
             class="my-4"
-            color="primary"
+            color="#3E6485"
             divided
           >
             <v-btn :value="true">Ativo</v-btn>
@@ -48,7 +48,7 @@
       </v-card-text>
 
       <v-card-actions class="justify-end">
-        <v-btn color="grey" @click="fechar">Cancelar</v-btn>
+        <v-btn color="black" @click="fechar">Cancelar</v-btn>
         <v-btn color="primary" :disabled="!isValid" @click="salvar">Salvar</v-btn>
       </v-card-actions>
     </v-card>
